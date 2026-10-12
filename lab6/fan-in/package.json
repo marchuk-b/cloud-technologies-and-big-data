@@ -1,5 +1,5 @@
 {
-  "name": "timeout",
+  "name": "fan-in",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
