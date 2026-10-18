@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Особистий словник</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+        .input-group { margin-bottom: 10px; }
+        input[type="text"] { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #218838; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #f8f9fa; margin: 5px 0; padding: 10px; border-left: 4px solid #007bff; }
+        strong { color: #007bff; }
+    </style>
+</head>
+<body>
+    <h1>Мій словник</h1>
+    
+    <div style="background: #e9ecef; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <div class="input-group">
+            <label>Термін / Слово:</label>
+            <input type="text" id="wordInput" placeholder="Наприклад: Docker">
+        </div>
+        <div class="input-group">
+            <label>Визначення:</label>
+            <input type="text" id="defInput" placeholder="Платформа для контейнеризації">
+        </div>
+        <button onclick="addWord()">Додати до словника</button>
+    </div>
+
+    <h2>Збережені терміни:</h2>
+    <ul id="wordList"></ul>
+
+    <script>
+        // Функція для завантаження списку слів з сервера
+        async function fetchWords() {
+            const res = await fetch('/words');
+            const words = await res.json();
+            
+            const list = document.getElementById('wordList');
+            list.innerHTML = '';
+            
+            for (const [word, definition] of Object.entries(words)) {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${word}</strong> — ${definition}`;
+                list.appendChild(li);
+            }
+        }
+
+        // Функція для відправки нового слова на сервер
+        async function addWord() {
+            const word = document.getElementById('wordInput').value;
+            const definition = document.getElementById('defInput').value;
+
+            if (!word || !definition) {
+                alert('Будь ласка, заповніть обидва поля!');
+                return;
+            }
+
+            await fetch('/words', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ word, definition })
+            });
+
+            // Очищаємо поля
+            document.getElementById('wordInput').value = '';
+            document.getElementById('defInput').value = '';
+            
+            // Оновлюємо список
+            fetchWords();
+        }
+
+        // Завантажуємо слова при відкритті сторінки
+        fetchWords();
+    </script>
+</body>
+</html>
