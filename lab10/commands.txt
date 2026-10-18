@@ -1,0 +1,17 @@
+docker pull containous/whoami
+
+docker images
+
+docker run -d --name whoami-lab -p 8080:80 containous/whoami
+
+docker ps
+
+curl http://localhost:8080
+
+docker logs whoami-lab
+
+docker stop whoami-lab
+
+docker ps -a
+
+docker rm whoami-lab
