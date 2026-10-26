@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "course-app.redis.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "course-app.redis.fullname" . }}
+spec:
+  replicas: {{ .Values.redis.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "course-app.redis.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "course-app.redis.fullname" . }}
+    spec:
+      containers:
+        - name: redis
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.redis.service.targetPort }}
+          readinessProbe:
+            exec:
+              command: ["redis-cli", "ping"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 5

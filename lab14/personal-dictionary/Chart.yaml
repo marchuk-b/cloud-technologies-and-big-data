@@ -1,0 +1,9 @@
+apiVersion: v2
+name: personal-dictionary
+description: Helm chart for Personal Dictionary app with Redis
+
+type: application
+
+version: 0.1.0
+
+appVersion: "1.0"

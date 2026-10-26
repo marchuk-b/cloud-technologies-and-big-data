@@ -1,0 +1,8 @@
+Дякуємо за встановлення {{ .Chart.Name }}.
+
+Ваш реліз називається {{ .Release.Name }}.
+
+Щоб дізнатися більше про реліз, спробуйте:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
