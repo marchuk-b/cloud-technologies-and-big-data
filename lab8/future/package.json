@@ -1,0 +1,22 @@
+{
+  "name": "future",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "future.ts",
+  "scripts": {
+    "dev": "tsx watch src/future.ts",
+    "build": "tsc",
+    "start": "node dist/future.ts",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  }
+}
